@@ -1,0 +1,31 @@
+
+<odoo>
+  <record id="payment_provider_generic" model="payment.provider">
+    <field name="name">Generic Payment</field>
+    <field name="code">generic</field>
+    <field name="state">enabled</field>
+    <field name="generic_api_key">demo_key</field>
+    <field name="generic_api_secret">demo_secret</field>
+    <field name="payment_method_ids"
+               eval="[Command.set([
+                         ref('payment.payment_method_card'),
+                         ref('payment.payment_method_emi_india'),
+                         ref('payment.payment_method_fpx'),
+                         ref('payment.payment_method_netbanking'),
+                         ref('payment.payment_method_paylater_india'),
+                         ref('payment.payment_method_paynow'),
+                         ref('payment.payment_method_upi'),
+                         ref('payment.payment_method_wallets_india'),
+                     ])]"
+        />
+  </record>
+  
+  <record id="payment_method_generic_manual_in" model="payment.method.line">
+        <field name="name">Generic Manual In</field>
+        <field name="payment_type">inbound</field>
+        <field name="provider_id" ref="payment_provider_generic"/>
+        <field name="payment_method_id" ref="account.account_payment_method_manual_in"/>
+        <field name="sequence">10</field>
+    </record>
+  
+</odoo>

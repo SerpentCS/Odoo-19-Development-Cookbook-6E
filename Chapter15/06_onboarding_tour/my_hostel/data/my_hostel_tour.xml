@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hostel_tour" model="web_tour.tour">
+        <field name="name">hostel_tour</field>
+        <field name="sequence">5</field>
+        <field name="rainbow_man_message">Congrats, best of luck catching such big fish!</field>
+    </record>
+</odoo>

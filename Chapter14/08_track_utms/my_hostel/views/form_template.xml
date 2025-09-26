@@ -1,0 +1,141 @@
+<odoo>
+    <template id="hostel_inquiry_form"
+        name="Hostel Inquiry Form">
+        <t t-call="website.layout">
+            <section class="s_website_form" data-snippet="s_website_form">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 mb64">
+                            <div class="aboutus-section pl-5 pr-5 pt32 pb32">
+                                <div class="wrapper wrapper--w900">
+                                    <div class="card">
+                                        <div class="card-body mt8">
+                                            <form action="/inquiry/submit/" method="POST" class="o_mark_required" id="inquiry_form" enctype="multipart/form-data" data-model_name="hostel.inquiries" data-success-mode="redirect"  data-success-page="/contactus-thank-you">
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                                <div class="row pt8">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="name"> Your Name </label>
+                                                        <input type="text" class="form-control" name="name"
+                                                                id="name" required="True" />
+                                                    </div>
+                                                </div>
+                                                <div class="row pt8">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="phone"> Phone </label>
+                                                        <input type="text" class="form-control" name="phone"
+                                                                id="phone" required="True" />
+                                                    </div>
+                                                </div>
+                                                <div class="row pt8">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="email"> Email ID </label>
+                                                        <input type="text" class="form-control" name="email"
+                                                                id="email"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt8">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="book_fy"> Booking for the Year </label>
+                                                        <input type="text" class="form-control" name="book_fy"
+                                                                id="book_fy"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt8">
+                                                    <div class="form-group col-md-12">
+                                                        <label for="queries"> Your Question </label>
+                                                        <input type="text" class="form-control" name="queries"
+                                                                id="queries"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row pt24">
+                                                    <div class="col-sm-12 pt8">
+                                                        <button type="submit" 
+                                                            class="btn btn-primary btn-lg a-submit s_website_form_send">
+                                                            <span>Submit</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </template>
+
+    <template id="hostel_issue_form"
+        name="Hostel Issue Form">
+        <t t-call="website.layout">
+          <div class="container">
+              <section id="forms" class="col-12 col-md-9 s_website_form" data-vcss="001" data-snippet="s_website_form">
+                  <div class="container">
+                      <form id="hostel_issue_form" action="/website/form/" method="post"
+                          enctype="multipart/form-data" class="o_mark_required row"
+                          data-mark="*" data-model_name="hostel.issue"
+                          data-success-mode="redirect" data-success-page="/contactus-thank-you"
+                          hide-change-model="true">
+                          <div class="s_website_form_rows row s_col_no_bgcolor">
+                              <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_dnone"
+                                   data-type="many2one" data-model="res.partner">
+                                  <div class="row s_col_no_resize s_col_no_bgcolor">
+                                      <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="student_id">
+                                          <span class="s_website_form_label_content">Student</span>
+                                      </label>
+                                      <div class="col-sm">
+                                          <select class="form-select s_website_form_input" name="student_id" id="student_select">
+                                                  <option id="room_select" t-att-value="request.env.user.partner_id.id">
+                                                      <t t-esc="request.env.user.name"/>
+                                                  </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 mb-0 py-2 s_website_form_field"
+                                   data-type="many2one" data-model="hostel.room">
+                                  <div class="row s_col_no_resize s_col_no_bgcolor">
+                                      <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="room_id">
+                                          <span class="s_website_form_label_content">Room</span>
+                                      </label>
+                                      <div class="col-sm">
+                                          <select class="form-select s_website_form_input" name="room_id" id="room_select">
+                                              <t t-foreach="rooms" t-as="room">
+                                                <option id="room_select" t-att-value="room.id">
+                                                    <t t-esc="room.name"/>
+                                                </option>
+                                            </t>
+                                          </select>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 mb-0 py-2 s_website_form_field"
+                                  data-type="text" data-name="Field">
+                                  <div class="row s_col_no_resize s_col_no_bgcolor">
+                                      <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="issue_description">
+                                          <span class="s_website_form_label_content">Short Description</span>
+                                      </label>
+                                      <div class="col-sm">
+                                          <textarea id="issue_description"
+                                              class="form-control s_website_form_input"
+                                              placeholder=""
+                                              name="issue_description" rows="5"></textarea>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 s_website_form_submit mb64" data-name="Submit Button">
+                                  <div class="alert alert-warning mt-2 d-none" id="warning-message"></div>
+                                  <div style="width: 200px" class="s_website_form_label"/>
+                                  <a href="#" role="button" class="btn btn-primary btn-lg s_website_form_send" id="apply-btn">Submit</a>
+                                  <span id="s_website_form_result"></span>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </section>
+          </div>
+        </t>
+    </template>
+</odoo>
