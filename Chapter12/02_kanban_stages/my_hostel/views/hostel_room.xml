@@ -64,7 +64,6 @@
                             <div class="oe_kanban_content">
                                 <div class="oe_kanban_card">
                                     <div>
-                                        <!-- <i class="fa fa-user"/> -->
                                         <b>
                                             <field name="name" />
                                         </b>

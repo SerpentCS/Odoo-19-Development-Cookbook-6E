@@ -10,7 +10,6 @@
     <menuitem name="My Hostel" id="hostel_base_menu" />
     <menuitem name="Rooms" id="hostel_room_menu" parent="hostel_base_menu" action="hostel_base_action"/>
 
-    <!-- Form View -->
     <record id="hostel_room_view_form" model="ir.ui.view">
         <field name="name">Hostel Room Form</field>
         <field name="model">hostel.room</field>
@@ -21,16 +20,18 @@
                     <button name="make_closed"  string="Make Closed" type="object"/>
                     <field name="state" widget="statusbar"/>
                 </header>
-                <group>
+                <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="room_no"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="room_no"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="member_ids" widget="many2many_tags"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="description"/>
-                        <field name="member_ids" widget="many2many_tags"/>
-                    </group>
-                </group>
+                </sheet>
             </form>
         </field>
     </record>

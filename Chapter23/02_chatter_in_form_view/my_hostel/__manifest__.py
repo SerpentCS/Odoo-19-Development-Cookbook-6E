@@ -7,7 +7,7 @@ Manage Hostel
 ==============
 Efficiently manage the entire residential facility in the school
     """,  # Supports reStructuredText(RST) format (description is Deprecated)
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": "Tools",
     "website": "https://www.serpentcs.com",

@@ -32,8 +32,9 @@ class HostelRoom(models.Model):
         store=True, string="Availability", help="Room availability in hostel")
     room_category_id = fields.Many2one('hostel.room.category', string='Room Category')
 
-    _sql_constraints = [
-       ("room_no_unique", "unique(room_no)", "Room number must be unique!")]
+    _room_no_unique = models.Constraint(
+        'unique(room_no)', 'Room number must be unique!',
+    )
 
     @api.constrains("rent_amount")
     def _check_rent_amount(self):
