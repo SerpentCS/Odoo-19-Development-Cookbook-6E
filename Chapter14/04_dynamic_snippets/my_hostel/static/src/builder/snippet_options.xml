@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Options panel for hostel snippet -->
+    <t t-name="my_hostel.HostelSnippetOption">
+        <!-- Table Style Selector -->
+        <BuilderRow label.translate="Table Style">
+            <BuilderSelect>
+                <BuilderSelectItem title.translate="Striped" classAction="'table-striped'">Striped</BuilderSelectItem>
+                <BuilderSelectItem title.translate="Bordered" classAction="'table-bordered'">Bordered</BuilderSelectItem>
+                <BuilderSelectItem title.translate="Dark" classAction="'table-dark'">Dark</BuilderSelectItem>
+                <BuilderSelectItem title.translate="None" classAction="''">None</BuilderSelectItem>
+            </BuilderSelect>
+        </BuilderRow>
+        <BuilderRow label.translate="Margin">
+            <BuilderNumberInput styleAction="'margin'" unit="'px'" composable="true"/>
+        </BuilderRow>
+    </t>
+</templates>

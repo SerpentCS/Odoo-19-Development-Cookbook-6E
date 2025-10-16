@@ -47,23 +47,4 @@
         </xpath>
     </template>
 
-    <template id="s_custom_snippet_options" inherit_id="website.snippet_options" name="Custom- Snippets Options">
-        <xpath expr="." position="inside">
-            <div dats-js="HostelSnippet" data-selector=".hostel_list" data-target=".tabel">
-                <we-select string="Table Style">
-                    <we-button data-select-class="table-striped">Striped</we-button>
-                    <we-button data-select-class="table-bordered">Bordered</we-button>
-                    <we-button data-select-class="table-dark">Dark</we-button>
-                    <we-button data-select-class="">None</we-button>
-                </we-select>
-                <we-title>Space</we-title>
-                <we-button-group string="Before">
-                    <we-button data-select-class="mt-0">1</we-button>
-                    <we-button data-select-class="mt-3">2</we-button>
-                    <we-button data-select-class="mt-5">3</we-button>
-                </we-button-group>
-            </div>
-        </xpath>
-    </template>
-
 </odoo>

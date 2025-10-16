@@ -2,7 +2,7 @@
 {
     # Module information
     'name': 'My Hostel',
-    'version': '19.0',
+    'version': '19.0.1.0.0',
     'category': 'Extra Tools',
     'license': 'LGPL-3',
     'summary': """

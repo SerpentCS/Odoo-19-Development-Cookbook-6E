@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { markup } from "@odoo/owl"
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add('hostel_tour',  {
     url: "/odoo",

@@ -22,7 +22,7 @@ patch(ControlButtons.prototype, {
             });
             if (orders.length > 0) {
                 var order_list = orders.map((o) => {
-                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total) };
+                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total), 'id': o.id };
                 });
                 await this.dialog.add(SelectionPopup, {
                     title: 'Last 5 orders',

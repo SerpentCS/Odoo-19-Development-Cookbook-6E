@@ -19,7 +19,6 @@ class Main(http.Controller):
     def hostel(self):
         country_id = False
         country_code = request.geoip and request.geoip.get('country_code') or False
-        print("country_code *******======>>>", country_code)
         if country_code:
             country_ids = request.env['res.country'].sudo().search([('code', '=', country_code)])
             if country_ids:

@@ -17,11 +17,9 @@ class Main(http.Controller):
     def all_students_mark_mine(self):
         students = request.env['hostel.student'].sudo().search([])
         hostels = request.env['hostel.hostel'].sudo().search([('rector', '=', request.env.user.partner_id.id)])
-        print("\nhostels",hostels)
         hostel_rooms = request.env['hostel.room'].sudo().search([('hostel_id', 'in', hostels.ids)])
         html_result = '<html><body><ul>'
         for student in students:
-            print("/////////student",student)
             if student.id in hostel_rooms.student_ids.ids:
                 html_result += "<li> <b>%s</b> </li>" % student.name
             else:

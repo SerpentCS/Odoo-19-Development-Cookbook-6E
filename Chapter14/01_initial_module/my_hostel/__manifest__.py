@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 {
     'name': "My Hostel",
-    'summary': "Manage the Hostel",
-    'website': "",
-    'category': 'Website',
-    'version': '19.0',
-    "author": "Serpent Consulting Services Pvt. Ltd.",
-    'depends': ['base', 'website'],
-    "website": "https://www.serpentcs.com",
+    "version": "19.0.1.0.0",
+    "summary": "Manage Hostel easily",  # Module subtitle phrase
+    "description": """
+Manage Hostel
+==============
+Efficiently manage the entire residential facility in the school
+    """,  # Supports reStructuredText(RST) format (description is Deprecated)
+    "category": "Tools",
+    "website": "http://www.serpentcs.com",
     'data': [
         # load views and templates here...
     ],
@@ -17,4 +19,7 @@
             'my_hostel/static/src/js/hostel.js',
         ],
     },
+    "installable": True,
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "license": "AGPL-3",
 }

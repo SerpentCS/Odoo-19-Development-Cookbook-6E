@@ -1,16 +1,14 @@
 {
-    "name": "Hostel Management",  # Module title
+    'name': "My Hostel",
+    "version": "19.0.1.0.0",
     "summary": "Manage Hostel easily",  # Module subtitle phrase
     "description": """
 Manage Hostel
 ==============
 Efficiently manage the entire residential facility in the school
     """,  # Supports reStructuredText(RST) format (description is Deprecated)
-    "version": "19.0",
-    "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": "Tools",
-    "website": "https://www.serpentcs.com",
-    "license": "AGPL-3",
+    "website": "http://www.serpentcs.com",
     "depends": ["website"],
     "data": [
         "security/hostel_security.xml",
@@ -24,4 +22,6 @@ Efficiently manage the entire residential facility in the school
         "views/hostel_template.xml",
     ],
     "installable": True,
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "license": "AGPL-3",
 }

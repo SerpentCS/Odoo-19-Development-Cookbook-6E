@@ -1,6 +1,7 @@
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ControlButtons } from "@point_of_sale/app/screens/product_screen/control_buttons/control_buttons";
 import { patch } from "@web/core/utils/patch";
+import { ProductCard } from "@point_of_sale/app/components/product_card/product_card";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { sprintf } from "@web/core/utils/strings";
 
@@ -22,7 +23,7 @@ patch(ControlButtons.prototype, {
             });
             if (orders.length > 0) {
                 var order_list = orders.map((o) => {
-                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total) };
+                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total), 'id': o.id };
                 });
                 await this.dialog.add(SelectionPopup, {
                     title: 'Last 5 orders',
@@ -42,3 +43,9 @@ patch(ControlButtons.prototype, {
     }
 });
 
+patch(ProductCard, {
+    props: {
+        ...ProductCard.props,
+        standard_price: String,
+    },
+});

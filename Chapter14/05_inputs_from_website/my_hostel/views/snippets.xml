@@ -46,7 +46,7 @@
         </xpath>
     </template>
 
-    <template id="s_hostel_snippet_options" inherit_id="website.snippet_options">
+    <!-- <template id="s_hostel_snippet_options" inherit_id="website.snippet_options">
         <xpath expr="//div[@id='so_width']" position="before">
             <div data-selector=".hostel_snippet">
                 <we-select string="Table Style">
@@ -70,6 +70,6 @@
                 </we-button-group>
             </div>
         </xpath>
-    </template>
+    </template> -->
 
 </odoo>

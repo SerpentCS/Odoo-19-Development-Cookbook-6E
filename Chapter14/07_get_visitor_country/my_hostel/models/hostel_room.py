@@ -30,8 +30,10 @@ class HostelRoom(models.Model):
     availability = fields.Float(compute="_compute_check_availability",
         store=True, string="Availability", help="Room availability in hostel")
 
-    _sql_constraints = [
-       ("room_no_unique", "unique(room_no)", "Room number must be unique!")]
+    _room_no_uniq = models.Constraint(
+        'UNIQUE(room_no)',
+        'Room number must be unique!',
+    )
 
     @api.constrains("rent_amount")
     def _check_rent_amount(self):

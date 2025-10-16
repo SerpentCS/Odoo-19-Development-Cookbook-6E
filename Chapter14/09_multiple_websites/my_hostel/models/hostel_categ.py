@@ -5,8 +5,6 @@ from odoo.exceptions import ValidationError
 class HostelCategory(models.Model):
     _name = "hostel.category"
     _description = "Hostel Categories"
-    _parent_store = True
-    _parent_name = "parent_id" # optional if field is 'parent_id'
 
     name = fields.Char('Category')
     parent_id = fields.Many2one(
@@ -14,7 +12,6 @@ class HostelCategory(models.Model):
         string='Parent Category',
         ondelete='restrict',
         index=True)
-    parent_path = fields.Char(index=True, unaccent=False)
     child_ids = fields.One2many(
         'hostel.category', 'parent_id',
         string='Child Categories')

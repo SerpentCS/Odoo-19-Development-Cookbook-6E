@@ -4,6 +4,7 @@
     <field name="name">Generic Payment</field>
     <field name="code">generic</field>
     <field name="state">enabled</field>
+    <field name="is_published">True</field>
     <field name="generic_api_key">demo_key</field>
     <field name="generic_api_secret">demo_secret</field>
     <field name="payment_method_ids"
@@ -20,12 +21,12 @@
         />
   </record>
   
-  <record id="payment_method_generic_manual_in" model="payment.method.line">
-        <field name="name">Generic Manual In</field>
-        <field name="payment_type">inbound</field>
-        <field name="provider_id" ref="payment_provider_generic"/>
-        <field name="payment_method_id" ref="account.account_payment_method_manual_in"/>
-        <field name="sequence">10</field>
-    </record>
+<!--   <record id="payment_method_generic_manual_in" model="payment.method.line"> -->
+<!--         <field name="name">Generic Manual In</field> -->
+<!--         <field name="payment_type">inbound</field> -->
+<!--         <field name="provider_id" ref="payment_provider_generic"/> -->
+<!--         <field name="payment_method_id" ref="account.account_payment_method_manual_in"/> -->
+<!--         <field name="sequence">10</field> -->
+<!--     </record> -->
   
 </odoo>

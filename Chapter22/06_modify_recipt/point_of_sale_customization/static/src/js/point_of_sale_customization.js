@@ -3,6 +3,7 @@ import { ControlButtons } from "@point_of_sale/app/screens/product_screen/contro
 import { OrderSummary } from "@point_of_sale/app/screens/product_screen/order_summary/order_summary";
 import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { patch } from "@web/core/utils/patch";
+import { ProductCard } from "@point_of_sale/app/components/product_card/product_card";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { sprintf } from "@web/core/utils/strings";
 
@@ -24,7 +25,7 @@ patch(ControlButtons.prototype, {
             });
             if (orders.length > 0) {
                 var order_list = orders.map((o) => {
-                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total) };
+                    return { 'label': sprintf("%s -TOTAL: %s", o.name, o.amount_total) , 'id': o.id };
                 });
                 await this.dialog.add(SelectionPopup, {
                     title: 'Last 5 orders',
@@ -42,6 +43,13 @@ patch(ControlButtons.prototype, {
             });
         }
     }
+});
+
+patch(ProductCard, {
+    props: {
+        ...ProductCard.props,
+        standard_price: String,
+    },
 });
 
 patch(OrderSummary.prototype, {
@@ -66,7 +74,7 @@ patch(PosOrder.prototype, {
             let diffrence = (line.product_id.list_price * line.qty) - line.getBasePrice();
             return rem + diffrence;
         }, 0);
-        if (savedAmount > 0) {
+        if (saved_amount > 0) {
             return saved_amount;
         }
         return 0;
