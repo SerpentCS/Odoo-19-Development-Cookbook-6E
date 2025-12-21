@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="point_of_sale_customization.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='props.showRemainingButtons']/div/button[hasclass('o_pricelist_button')]" position="after">
+            <button class="btn btn-secondary btn-lg py-5"
+                    t-on-click="clickCustomDiscount">
+                <i class="fa fa-gift"></i>
+                <span> 5% Discount</span>
+            </button>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="point_of_sale_customization.ControlButtons" t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='props.showRemainingButtons']/div/button[hasclass('o_pricelist_button')]" position="after">
+            <button class="btn btn-secondary btn-lg py-5"
+                    t-on-click="clickCustomDiscount">
+                <i class="fa fa-gift"></i>
+                <span> 5% Discount</span>
+            </button>
+            <button class="btn btn-secondary btn-lg py-5"
+                    t-on-click="clickLastOrderButton">
+                <i class="fa fa-server"></i> Making RPC calls
+                <span>Last Orders</span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-name="ProductScreen" t-inherit="point_of_sale.ProductScreen"
+        t-inherit-mode="extension">
+        <xpath expr="//ProductCard" position="attributes">
+            <attribute name="standard_price">
+                pos.env.utils.formatCurrency(product.list_price - product.standard_price)
+            </attribute>
+        </xpath>
+    </t>
+
+    <t t-name="ProductCard" t-inherit="point_of_sale.ProductCard"
+        t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-content')]" position="after">
+            <span t-if="props.standard_price"
+                  class="sale_margin py-1 fw-bolder">
+                <t t-esc="props.standard_price"/>
+            </span>
+        </xpath>
+    </t>
+
+    <t t-name="point_of_sale_customization.OrderReceipt"
+       t-inherit="point_of_sale.OrderReceipt"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt')]//div[hasclass('before-footer')]" position="before">
+            <div style="text-align:center;" t-if="order.saved_amount()">
+                <br/>
+                <div >
+                    You saved
+                    <t t-out="formatCurrency(order.saved_amount())"/>
+                    on this order.
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

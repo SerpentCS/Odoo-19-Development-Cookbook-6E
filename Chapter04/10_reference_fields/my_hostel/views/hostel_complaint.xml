@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_hostel_complaint_form" model="ir.ui.view">
+        <field name="name">hostel.complaint.form</field>
+        <field name="model">hostel.complaint</field>
+        <field name="arch" type="xml">
+            <form string="Complaint">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="target_object_id"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_hostel_complaint">
+         <field name="name">Complaint</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="res_model">hostel.complaint</field>
+         <field name="view_mode">list,form</field>
+         <field name="domain">[]</field>
+         <field name="context">{}</field>
+          <field name="help" type="html">
+             <p class="oe_view_nocontent_create">
+                 Create Complaint.
+             </p>
+          </field>
+     </record>
+
+    <menuitem id="hostel_complaint_sub_menu" name="Complaints" parent="my_hostel.hostel_main_menu" 
+        action="my_hostel.action_hostel_complaint" groups="my_hostel.group_hostel_manager" 
+        sequence="4"/>
+
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+<template id="payment_generic_redirect_form" name="Generic Payment Form">
+  <form t-att-action="form_action" method="POST">
+    <input type="hidden" name="reference" t-att-value="reference"/>
+    <input type="hidden" name="currency_id" t-att-value="currency and currency.id"/>
+    <input type="hidden" name="amount" t-att-value="amount"/>
+    <input type="hidden" name="partner_id" t-att-value="partner_id"/>
+    <p>Dummy payment form. Click below to simulate payment.</p>
+    <button type="submit">Pay Now</button>
+  </form>
+</template>
+</odoo>

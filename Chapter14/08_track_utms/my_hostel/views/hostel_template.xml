@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="hostel_list" name="Hostels">
+        <t t-call="website.layout">
+            <div class="container">
+                <div class="row">
+                    <h1 class="text-center">Hostels</h1>
+                </div>
+                <div class="row">
+                    <t t-foreach="hostels" t-as="hostel">
+                        <div class="col-md-3 col-sm-2 col-12 mt16">
+                           <div t-attf-class="card mt24 #{'bg-light' if hostel_rating else ''}">
+                                <div class="card-body">
+                                    <h3 t-field="hostel.name"/>
+                                    <t t-if="hostel.hostel_rating">
+                                        <div t-field="hostel.hostel_rating" class="text-muted"/>
+                                    </t>
+                                    <b class="mt8"> Authors </b>
+                                    <ul>
+                                        <li t-foreach="hostel.state_id" t-as="state">
+                                            <span t-esc="state.name" />
+                                        </li>
+                                    </ul>
+                                    <a t-attf-href="/hostel/#{hostel.id}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-building"/> Hostel Detail
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="hostel_detail" name="Hostel Detail">
+        <t t-call="website.layout">
+            <div class="container">
+                <div class="row mt16">
+                    <div class="col-5">
+                        <span t-field="hostel.image" t-options="{
+                            'widget': 'image',
+                            'class': 'mx-auto d-block img-thumbnail'}"/>
+                    </div>
+                    <div class="offset-1 col-6">
+                        <h1 t-field="hostel.name"/>
+                        <p t-esc="hostel.hostel_rating"></p>
+                        <t t-if="hostel.hostel_code">
+                            <div t-field="hostel.hostel_code"
+                            class="text-muted"/>
+                        </t>
+                        <b class="mt8"> State: </b>
+                        <ul>
+                            <li t-foreach="hostel.state_id" t-as="state">
+                                <span t-esc="state.name" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div t-field="hostel.description">
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+</odoo>
