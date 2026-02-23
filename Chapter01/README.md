@@ -1,23 +1,47 @@
+# Chapter 01 – Odoo 19 Development Environment (Command Reference)
 
-# Chapter 01 – Command Reference
+This document contains **all command-line commands and configuration steps** used in Chapter 01.
+---
 
-This file contains **all command-line commands used in Chapter 01** of the book.  
-It is designed for **reviewers and readers** to easily **copy, paste, and test** each step independently.
+# Table of Contents
+
+1. System Update & Core Dependencies  
+2. Install wkhtmltopdf  
+3. PostgreSQL Installation & Configuration  
+4. Git Configuration  
+5. Clone Odoo 19 Source Code  
+6. Python Virtual Environment  
+7. Install Python Requirements  
+8. Create Database & Start Odoo  
+9. Optional: Node.js & RTL Support  
+10. Nginx Installation & Load Balancing  
+11. PostgreSQL Performance Tuning  
+12. Odoo Configuration File  
+13. Database Management via CLI  
+14. Debugging & Development  
+15. Update Add-on Modules List  
+16. Quick Start Summary  
 
 ---
 
-## System Update & Core Dependencies
+# 1. System Update & Core Dependencies
 
 ```bash
 sudo apt-get update
-sudo apt-get install openssh-server fail2ban python3-pip python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev python2-dev libffi-dev libmysqlclient-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev git curl -y
+sudo apt install -y openssh-server fail2ban python3-pip python3-dev python3-venv \
+libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential \
+libssl-dev libffi-dev libmysqlclient-dev libpq-dev libjpeg-dev liblcms2-dev \
+libblas-dev libatlas-base-dev git curl
 ```
 
 ---
 
-## Install wkhtmltopdf
+# 2. Install wkhtmltopdf (Required for PDF Reports)
 
 ```bash
+sudo apt update
+sudo apt install -y fontconfig libxrender1 xfonts-75dpi xfonts-base
+
 wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
 sudo dpkg -i wkhtmltox_0.12.6.1-2.jammy_amd64.deb
 sudo apt-get install -f
@@ -25,21 +49,24 @@ sudo apt-get install -f
 
 ---
 
-## PostgreSQL Installation & Configuration
+# 3. PostgreSQL Installation & Configuration
+
+Install PostgreSQL:
 
 ```bash
 sudo apt install postgresql -y
-sudo -u postgres createuser --superuser $(whoami)
-sudo su postgres
-psql
-alter user user_name with password 'your_password';
-\q
-exit
+```
+
+Create PostgreSQL user (same as Linux user):
+
+```bash
+sudo -u postgres createuser -s $USER
+sudo -u postgres psql -c "ALTER ROLE $USER WITH PASSWORD 'your_password';"
 ```
 
 ---
 
-## Git Configuration
+# 4. Git Configuration
 
 ```bash
 git config --global user.name "Your Name"
@@ -48,7 +75,7 @@ git config --global user.email youremail@example.com
 
 ---
 
-## Clone Odoo Source Code
+# 5. Clone Odoo 19 Source Code
 
 ```bash
 mkdir ~/odoo-dev
@@ -58,16 +85,23 @@ git clone -b 19.0 --single-branch --depth 1 https://github.com/odoo/odoo.git
 
 ---
 
-## Python Virtual Environment
+# 6. Python Virtual Environment
+
+Create virtual environment:
 
 ```bash
 python3 -m venv ~/venv-odoo-19.0
+```
+
+Activate it:
+
+```bash
 source ~/venv-odoo-19.0/bin/activate
 ```
 
 ---
 
-## Install Python Requirements
+# 7. Install Python Requirements
 
 ```bash
 cd ~/odoo-dev/odoo/
@@ -76,22 +110,42 @@ pip3 install -r requirements.txt
 
 ---
 
-## Create Database & Start Odoo
+# 8. Create Database & Start Odoo
+
+Create database:
 
 ```bash
 createdb odoo-test
+```
+
+Start Odoo:
+
+```bash
 python3 odoo-bin -d odoo-test -i base --addons-path=addons --db-filter=odoo-test$
 ```
 
-Alternative start:
+Alternative:
 
 ```bash
 ./odoo-bin -d odoo-test -i base --addons-path=addons --db-filter=odoo-test$
 ```
 
+Access in browser:
+
+```
+http://localhost:8069
+```
+
+Default credentials:
+
+```
+Username: admin
+Password: admin
+```
+
 ---
 
-## Optional: Node.js & RTL Support
+# 9. Optional: Node.js & RTL Support
 
 ```bash
 sudo apt-get install nodejs npm -y
@@ -100,7 +154,9 @@ sudo npm install -g rtlcss
 
 ---
 
-## Nginx Installation (Load Balancing)
+# 10. Nginx Installation & Load Balancing
+
+Install Nginx:
 
 ```bash
 sudo apt update
@@ -109,21 +165,76 @@ sudo systemctl enable nginx
 sudo systemctl start nginx
 ```
 
-Test and reload configuration:
+Test configuration:
 
 ```bash
 sudo nginx -t
 sudo systemctl reload nginx
 ```
 
+Example Load Balancer Configuration:
+
+```bash
+sudo nano /etc/nginx/conf.d/odoo_loadbalancer.conf
+```
+
+```nginx
+upstream odoo_backend {
+    server 127.0.0.1:8069;
+    server 127.0.0.1:8070;
+}
+
+server {
+    listen 80;
+    server_name odoo.yourdomain.com;
+
+    location / {
+        proxy_pass http://odoo_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
 ---
 
-## PostgreSQL Performance Tuning
+# 11. PostgreSQL Performance Tuning
+
+Edit PostgreSQL configuration:
 
 ```bash
 sudo nano /etc/postgresql/*/main/postgresql.conf
+```
+
+Recommended baseline:
+
+```conf
+shared_buffers = 256MB
+effective_cache_size = 1GB
+work_mem = 4MB
+maintenance_work_mem = 64MB
+max_connections = 100
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+checkpoint_timeout = 10min
+max_wal_size = 1GB
+random_page_cost = 1.1
+effective_io_concurrency = 200
+default_statistics_target = 100
+```
+
+Apply changes:
+
+```bash
 sudo systemctl reload postgresql
 sudo systemctl restart postgresql
+```
+
+Verify:
+
+```bash
 sudo -u postgres psql
 SHOW shared_buffers;
 SHOW effective_cache_size;
@@ -132,46 +243,89 @@ SHOW work_mem;
 
 ---
 
-## Odoo Configuration File
+# 12. Odoo Configuration File
 
-```bash
-sudo nano /etc/odoo/odoo.conf
-```
-
-Generate config automatically:
+Generate config file:
 
 ```bash
 ./odoo-bin --save --config myodoo.cfg --stop-after-init
-./odoo-bin --help | less
+```
+
+Run with config:
+
+```bash
 ./odoo-bin -c myodoo.cfg
+```
+
+Recommended production config:
+
+```ini
+[options]
+workers = 4
+db_maxconn = 64
+limit_memory_hard = 2684354560
+limit_memory_soft = 2147483648
+limit_request = 8192
+limit_time_cpu = 60
+limit_time_real = 120
+log_level = info
+logfile = /var/log/odoo/odoo.log
+admin_passwd = your_secure_master_password
+list_db = False
+```
+
+Worker formula:
+
+```
+workers = (CPU cores × 2) + 1
 ```
 
 ---
 
-## Database Management via CLI
+# 13. Database Management via CLI
+
+Create & start:
 
 ```bash
 createdb testdb && odoo-bin -d testdb
+```
+
+Duplicate:
+
+```bash
 createdb -T dbname newdbname
+cp -r ~/.local/share/Odoo/filestore/dbname ~/.local/share/Odoo/filestore/newdbname
+```
+
+Delete:
+
+```bash
 dropdb dbname
 rm -rf ~/.local/share/Odoo/filestore/dbname
 ```
 
-Backup & restore:
+Backup:
 
 ```bash
 pg_dump -Fc -f dbname.dump dbname
 tar cjf dbname.tgz dbname.dump ~/.local/share/Odoo/filestore/dbname
+```
+
+Restore:
+
+```bash
 tar xf dbname.tgz
 pg_restore -C -d dbname dbname.dump
 ```
 
 ---
 
-## Debugging & Development
+# 14. Debugging & Development
+
+Enable module-specific logging:
 
 ```bash
-python3 odoo-bin --log-handler=odoo.addons.my_module:DEBUG
+./odoo-bin --log-handler=odoo.addons.my_module:DEBUG
 ```
 
 Python breakpoint:
@@ -180,3 +334,30 @@ Python breakpoint:
 import pdb; pdb.set_trace()
 ```
 
+Enable full debug mode:
+
+```bash
+./odoo-bin --dev=all
+```
+
+---
+
+# 15. Update Add-on Modules List (UI)
+
+Apps → Update Apps List → Update
+
+---
+
+# 16. Quick Start Summary
+
+```bash
+source ~/venv-odoo-19.0/bin/activate
+cd ~/odoo-dev/odoo
+./odoo-bin -d odoo-test -i base --addons-path=addons
+```
+
+Open:
+
+```
+http://localhost:8069
+```
