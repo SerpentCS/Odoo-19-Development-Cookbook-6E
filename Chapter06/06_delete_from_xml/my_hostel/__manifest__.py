@@ -4,7 +4,7 @@
     "version": "19.0.1.0.0",
     'summary': "Manage Hostel easily",  # Module subtitle phrase
     'description': """
-Manage Library
+Manage hostel
 ==============
 Description related to Hostel.
     """,  # Supports reStructuredText(RST) format

@@ -37,6 +37,7 @@ class HostelStudent(models.Model):
         help="Date on which student discharge")
     duration = fields.Integer("Duration", compute="onchange_duration", inverse="_inverse_duration",
                                help="Enter duration of living")
+    room_no = fields.Char(related="room_id.room_no", precompute=True, string="Room Number")
 
     def action_assign_room(self):
         return {
