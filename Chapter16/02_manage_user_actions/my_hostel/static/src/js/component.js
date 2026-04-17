@@ -11,11 +11,10 @@ class MyComponent extends Component {
                t-on-click="onRemove"> </i>
         </div>`
     onRemove(ev) {
-        ev.target.closest('div').remove();
+        ev.target.closest("div").remove();
     }
 }
 
 whenReady().then(() => {
     mount(MyComponent, document.body);
 });
-

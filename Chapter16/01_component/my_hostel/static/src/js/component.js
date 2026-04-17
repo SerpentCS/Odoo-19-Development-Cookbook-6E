@@ -11,4 +11,3 @@ class MyComponent extends Component {
 whenReady().then(() => {
     mount(MyComponent, document.body);
 });
-
