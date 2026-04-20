@@ -5,7 +5,7 @@ console.log("Load component......");
 class MyComponent extends Component {
     static template = xml`
         <div class="bg-info text-white text-center p-3">
-            <b> Welcome To Odoo </b>
+            <b> Welcome to Odoo </b>
         </div>`
 }
 whenReady().then(() => {
