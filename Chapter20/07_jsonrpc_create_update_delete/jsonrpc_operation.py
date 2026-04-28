@@ -42,7 +42,7 @@ if user_id:
     print("Rooms created:", res)
     rooms_ids = res['result']
 
-    # Write in existing room record
+    # Update an existing room record
     room_to_write = rooms_ids[1]  # We will use ids of recently created rooms
     write_data = {'name': 'Room 2'}
     payload = get_json_payload("object", "execute_kw", db_name, user_id, password, 'hostel.room', 'write', [room_to_write, write_data])
