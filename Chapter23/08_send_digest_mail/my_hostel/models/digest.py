@@ -6,7 +6,7 @@ from odoo import fields, models
 class Digest(models.Model):
     _inherit = 'digest.digest'
 
-    kpi_room_rent = fields.Boolean('Room Rent')
+    kpi_room_rent = fields.Boolean('Room Allocated')
     kpi_room_rent_value = fields.Integer(
         compute='_compute_kpi_room_rent_value')
 
