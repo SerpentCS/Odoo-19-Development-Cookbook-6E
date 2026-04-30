@@ -8,7 +8,7 @@ export class HostelSnippet extends Interaction {
     static selector = ".hostel_snippet";
 
     setup() {
-        const rowCount = Number.parseInt(this.el.dataset.numberOfRooms || "5", 10);
+        const rowCount = Number.parseInt(this.el.dataset.numberOfHostels || "5", 10);
         this.rows = Number.isNaN(rowCount) ? 5 : rowCount;
         this.hostels = [];
     }
