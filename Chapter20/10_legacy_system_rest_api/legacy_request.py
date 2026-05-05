@@ -2,12 +2,12 @@ import requests
 import json
 
 # Odoo server URL
-odoo_url = "http://localhost:1919/api/legacy/create_data"
+odoo_url = "http://localhost:8069/api/legacy/create_data"
 
 # Payload includes credentials and the room data to create
 payload = {
     "params": {
-        "db": "cookbook_19",
+        "db": "odoo-test",
         "username": "admin",
         "password": "admin",
         "data": {
