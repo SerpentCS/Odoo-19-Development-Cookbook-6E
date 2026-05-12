@@ -1,0 +1,15 @@
+<odoo>
+    <record id="my_hostel.model_hostel_issue" model="ir.model">
+        <field name="website_form_key">hostel_service</field>
+        <field name="website_form_access">True</field>
+        <field name="website_form_label">Hostel Service</field>
+    </record>
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>hostel.issue</value>
+        <value eval="[
+            'student_id',
+            'room_id',
+            'issue_description',
+        ]"/>
+    </function>
+</odoo>

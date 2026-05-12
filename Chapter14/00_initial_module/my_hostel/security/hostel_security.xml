@@ -1,0 +1,25 @@
+<odoo noupdate="1">
+
+    <record model="ir.module.category" id="module_category_hostel">
+        <field name="name">Hostel Management</field>
+        <field name="sequence">31</field>
+    </record>
+
+    <record model="res.groups.privilege" id="res_groups_privilege_hostel">
+        <field name="name">Hostel</field>
+        <field name="sequence">1</field>
+        <field name="category_id" ref="my_hostel.module_category_hostel"/>
+    </record>
+
+    <record id="group_hostel_manager" model="res.groups">
+        <field name="name">Hostel Manager</field>
+        <field name="privilege_id" ref="res_groups_privilege_hostel"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_hostel_user" model="res.groups">
+        <field name="name">Hostel User</field>
+        <field name="privilege_id" ref="res_groups_privilege_hostel"/>
+    </record>
+
+</odoo>
